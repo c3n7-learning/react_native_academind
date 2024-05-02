@@ -24,7 +24,7 @@ export default function StartGameScreen({ onPickNumber }) {
       return;
     }
 
-    onPickNumber(enteredNumber);
+    onPickNumber(chosenNumber);
   }
 
   return (
