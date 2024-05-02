@@ -17,14 +17,12 @@ export default function GameOverScreen({
           style={styles.image}
         />
       </View>
-      <View>
-        <Text style={styles.summaryText}>
-          Your phone needed <Text style={styles.highlight}>{roundsNumber}</Text>{" "}
-          rounds to guess the number{" "}
-          <Text style={styles.highlight}>{userNumber}</Text>.
-        </Text>
-        <PrimaryButton onPress={onStartNewGame}>Start New Game</PrimaryButton>
-      </View>
+      <Text style={styles.summaryText}>
+        Your phone needed <Text style={styles.highlight}>{roundsNumber}</Text>{" "}
+        rounds to guess the number{" "}
+        <Text style={styles.highlight}>{userNumber}</Text>.
+      </Text>
+      <PrimaryButton onPress={onStartNewGame}>Start New Game</PrimaryButton>
     </View>
   );
 }
