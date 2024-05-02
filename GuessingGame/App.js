@@ -20,10 +20,17 @@ export default function App() {
   });
 
   useEffect(() => {
+    const hideSplash = async () => {
+      await SplashScreen.hideAsync();
+    };
     if (fontsLoaded) {
-      SplashScreen.hideAsync();
+      hideSplash();
     }
   }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
+    return null;
+  }
 
   function pickedNumberHandler(pickedNumber) {
     setUserNumber(pickedNumber);
