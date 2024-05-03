@@ -57,6 +57,7 @@ export default function GameOverScreen({
 }
 
 const deviceWidth = Dimensions.get("window").width;
+const deviceHeight = Dimensions.get("window").height;
 
 const styles = StyleSheet.create({
   screen: {
@@ -81,7 +82,7 @@ const styles = StyleSheet.create({
   },
   summaryText: {
     fontFamily: "open-sans",
-    fontSize: 24,
+    fontSize: (deviceWidth < 380) | (deviceHeight < 380) ? 20 : 24,
     textAlign: "center",
     marginBottom: 24,
   },
