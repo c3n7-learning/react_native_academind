@@ -2,6 +2,7 @@ import { FlatList } from "react-native";
 import { CATEGORIES } from "../data/dummy-data";
 import CategoryGridTile from "../components/CategoryGridTile";
 
+// navigation hook can also be gotten via "useNavigation" hook
 export default function CategoriesScreen({ navigation }) {
   function renderCategoryItem(itemData) {
     function pressHandler() {
