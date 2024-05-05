@@ -8,7 +8,7 @@ export default function ExpensesSummary({ expenses, periodName }) {
 
   return (
     <View>
-      <Text>{preriodName}</Text>
+      <Text>{periodName}</Text>
       <Text>${expensesSum.toFixed(2)}</Text>
     </View>
   );
