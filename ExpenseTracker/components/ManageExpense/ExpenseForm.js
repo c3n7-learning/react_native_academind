@@ -2,6 +2,7 @@ import { Alert, StyleSheet, Text, View } from "react-native";
 import Input from "./Input";
 import { useState } from "react";
 import Button from "../ui/Button";
+import { GlobalStyles } from "../../constants/styles";
 
 export default function ExpenseForm({
   onCancel,
@@ -75,6 +76,7 @@ export default function ExpenseForm({
             onChangeText: inputChangedHandler.bind(this, "amount"),
             value: inputs.amount.value,
           }}
+          invalid={!inputs.amount.isValid}
           style={styles.rowInput}
         />
         <Input
@@ -85,6 +87,7 @@ export default function ExpenseForm({
             onChangeText: inputChangedHandler.bind(this, "date"),
             value: inputs.date.value,
           }}
+          invalid={!inputs.date.isValid}
           style={styles.rowInput}
         />
       </View>
@@ -97,10 +100,13 @@ export default function ExpenseForm({
           onChangeText: inputChangedHandler.bind(this, "description"),
           value: inputs.description.value,
         }}
+        invalid={!inputs.description.isValid}
       />
 
       {formIsInvalid && (
-        <Text>Invalid input values, please check your entered data!</Text>
+        <Text style={styles.errorText}>
+          Invalid input values, please check your entered data!
+        </Text>
       )}
 
       <View style={styles.buttons}>
@@ -132,6 +138,11 @@ const styles = StyleSheet.create({
   },
   rowInput: {
     flex: 1,
+  },
+  errorText: {
+    textAlign: "center",
+    color: GlobalStyles.colors.error500,
+    margin: 8,
   },
   buttons: {
     flexDirection: "row",
