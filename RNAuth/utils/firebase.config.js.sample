@@ -1,3 +1,4 @@
 export const FirebaseConfig = {
   WebAPIKey: "",
+  url: "",
 };
