@@ -19,8 +19,8 @@ function SignupScreen() {
       Alert.alert(
         "Could not register you. Please check your input and try again later."
       );
+      setIsAuthenticating(false);
     }
-    setIsAuthenticating(false);
   }
 
   if (isAuthenticating) {
