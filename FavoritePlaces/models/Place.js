@@ -1,4 +1,4 @@
-class Place {
+export class Place {
   constructor(title, imageUri, location) {
     this.title = title;
     this.imageUri = imageUri;
