@@ -14,7 +14,7 @@ import {
   useRoute,
 } from "@react-navigation/native";
 
-export default function LocationPicker() {
+export default function LocationPicker({ onPickLocation }) {
   const [pickedLocation, setPickedLocation] = useState();
   const navigation = useNavigation();
   const route = useRoute();
@@ -31,8 +31,13 @@ export default function LocationPicker() {
       };
 
       setPickedLocation(mapPickedLocation);
+      onPickLocation(mapPickedLocation);
     }
   }, [route, isFocused]);
+
+  useEffect(() => {
+    onPickLocation(pickedLocation);
+  }, [pickedLocation]);
 
   async function verifyPermissions() {
     if (
