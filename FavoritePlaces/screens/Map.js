@@ -1,7 +1,17 @@
+import { useState } from "react";
 import { StyleSheet } from "react-native";
-import MapView from "react-native-maps";
+import MapView, { Marker } from "react-native-maps";
 
 export default function Map() {
+  const [selectedLocation, setSelectedLocation] = useState();
+
+  function selectLocationHandler(event) {
+    const lat = event.nativeEvent.coordinate.latitude;
+    const lng = event.nativeEvent.coordinate.longitude;
+
+    setSelectedLocation({ lat, lng });
+  }
+
   return (
     <MapView
       style={styles.map}
@@ -11,7 +21,18 @@ export default function Map() {
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
       }}
-    ></MapView>
+      onPress={selectLocationHandler}
+    >
+      {selectedLocation && (
+        <Marker
+          title="Picked Location"
+          coordinate={{
+            latitude: selectedLocation.lat,
+            longitude: selectedLocation.lng,
+          }}
+        />
+      )}
+    </MapView>
   );
 }
 
