@@ -27,3 +27,16 @@ export function init() {
 
   return promise;
 }
+
+export function insertPlace(place) {
+  return database.withTransactionAsync(() => {
+    database.runAsync(
+      `INSERT INTO places (title, imageUri, address, lat, lng) VALUES (?, ?, ?, ?, ?)`,
+      place.title,
+      place.imageUri,
+      place.address,
+      place.location.lat,
+      place.location.lng
+    );
+  });
+}
