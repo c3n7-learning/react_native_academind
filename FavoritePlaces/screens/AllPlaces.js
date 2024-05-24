@@ -19,7 +19,6 @@ export default function AllPlaces() {
     }
     if (isFocused) {
       loadPlaces();
-      // setLoadedPlaces((current) => [...current, route.params.place]);
     }
   }, [isFocused]);
 
