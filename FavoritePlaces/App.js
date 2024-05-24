@@ -7,7 +7,7 @@ import AddPlace from "./screens/AddPlace";
 import IconButton from "./components/ui/IconButton";
 import { Colors } from "./constants/Colors";
 import Map from "./screens/Map";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { init } from "./utils/database";
 import * as SplashScreen from "expo-splash-screen";
 
@@ -17,11 +17,19 @@ const Stack = createNativeStackNavigator();
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
+  const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
     init()
-      .then(async () => await SplashScreen.hideAsync())
+      .then(async () => {
+        setIsLoaded(true);
+        await SplashScreen.hideAsync();
+      })
       .catch((e) => console.warn(e));
   }, []);
+
+  if (!isLoaded) {
+    return;
+  }
 
   return (
     <>

@@ -5,7 +5,7 @@ export default function AddPlace({ navigation }) {
   async function createPlaceHandler(place) {
     try {
       await insertPlace(place);
-      navigation.navigate("AllPlaces", { place });
+      navigation.navigate("AllPlaces");
     } catch (e) {
       console.log("Error", e);
     }
