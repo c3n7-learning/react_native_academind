@@ -29,8 +29,8 @@ export function init() {
 }
 
 export function insertPlace(place) {
-  return database.withTransactionAsync(() => {
-    database.runAsync(
+  return database.withTransactionAsync(async () => {
+    const result = await database.runAsync(
       `INSERT INTO places (title, imageUri, address, lat, lng) VALUES (?, ?, ?, ?, ?)`,
       place.title,
       place.imageUri,
