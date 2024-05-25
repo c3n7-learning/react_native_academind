@@ -25,7 +25,7 @@ export default function PlacesList({ places }) {
       data={places}
       key={(item) => item.id}
       renderItem={({ item }) => (
-        <PlaceItem place={item} onSelect={selectedPlaceHandler.bind(item.id)} />
+        <PlaceItem place={item} onSelect={selectedPlaceHandler} />
       )}
     />
   );

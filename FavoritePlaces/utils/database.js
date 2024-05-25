@@ -70,3 +70,19 @@ export function fetchPlaces() {
     });
   });
 }
+
+export function fetchPlaceDetails(id) {
+  return new Promise(async (resolve, reject) => {
+    database.withTransactionSync(async () => {
+      try {
+        const result = await database.getAllAsync(
+          "SELECT * FROM places where id = ?;",
+          id
+        );
+        resolve(result[0]);
+      } catch (e) {
+        reject(e);
+      }
+    });
+  });
+}

@@ -11,7 +11,6 @@ export default function AllPlaces() {
     async function loadPlaces() {
       try {
         const places = await fetchPlaces();
-        console.log(places);
         setLoadedPlaces(places);
       } catch (e) {
         console.warn(e);
