@@ -2,7 +2,7 @@ import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import OutlinedButton from "../components/ui/OutlinedButton";
 import { Colors } from "../constants/Colors";
 import { useEffect, useState } from "react";
-import { fetchPlaceDetails } from "../utils/database";
+import { fetchPlaceDetails, init } from "../utils/database";
 
 export default function PlaceDetails({ route, navigation }) {
   const [fetchedPlace, setFetchedPlace] = useState();
@@ -17,7 +17,13 @@ export default function PlaceDetails({ route, navigation }) {
 
     loadPlaceData();
   }, [selectedPlaceId]);
-  function showOnMapHandler() {}
+
+  function showOnMapHandler() {
+    navigation.navigate("Map", {
+      initialLat: fetchedPlace.location.lat,
+      initialLng: fetchedPlace.location.lng,
+    });
+  }
 
   if (!fetchedPlace) {
     return (

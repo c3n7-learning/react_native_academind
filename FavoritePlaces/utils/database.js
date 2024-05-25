@@ -79,7 +79,19 @@ export function fetchPlaceDetails(id) {
           "SELECT * FROM places where id = ?;",
           id
         );
-        resolve(result[0]);
+        const placeRaw = result[0];
+        resolve(
+          new Place(
+            placeRaw.title,
+            placeRaw.imageUri,
+            {
+              address: placeRaw.address,
+              lat: placeRaw.lat,
+              lng: placeRaw.lng,
+            },
+            placeRaw.id
+          )
+        );
       } catch (e) {
         reject(e);
       }
