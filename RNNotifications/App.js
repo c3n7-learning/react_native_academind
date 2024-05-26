@@ -1,18 +1,30 @@
 import { StatusBar } from "expo-status-bar";
 import { Button, StyleSheet, Text, View } from "react-native";
 import * as Notifications from "expo-notifications";
+import { useEffect } from "react";
 
 Notifications.setNotificationHandler({
-  handleNotification: async () => {
-    return {
-      shouldPlaySound: false,
-      shouldSetBadge: false,
-      shouldShowAlert: true,
-    };
-  },
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
 });
 
 export default function App() {
+  useEffect(() => {
+    const subscription = Notifications.addNotificationReceivedListener(
+      (notification) => {
+        const userName = notification.request.content.data.userName;
+        console.log("NOTIFICATION RECEIVED", userName);
+      }
+    );
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
+
   function scheduleNotificationHandler() {
     Notifications.scheduleNotificationAsync({
       trigger: { seconds: 5 },
