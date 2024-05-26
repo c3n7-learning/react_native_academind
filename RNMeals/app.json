@@ -17,7 +17,8 @@
     ],
     "ios": {
       "buildNumber": "1.0.0",
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.c3n7.RNMeals"
     },
     "android": {
       "versionCode": 1,

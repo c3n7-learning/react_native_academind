@@ -1,0 +1,2 @@
+#!/bin/sh
+EAS_NO_VCS=1 eas build -p ios --profile preview
