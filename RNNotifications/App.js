@@ -1,7 +1,8 @@
 import { StatusBar } from "expo-status-bar";
 import { Alert, Button, Platform, StyleSheet, Text, View } from "react-native";
+import Constants from "expo-constants";
 import * as Notifications from "expo-notifications";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -12,13 +13,14 @@ Notifications.setNotificationHandler({
 });
 
 export default function App() {
+  const [pushToken, setPushToken] = useState();
   useEffect(() => {
     async function configurePushNotifications() {
-      const { status } = Notifications.getPermissionsAsync();
+      const { status } = await Notifications.getPermissionsAsync();
       let finalStatus = status;
 
       if (finalStatus != "granted") {
-        const { status } = Notifications.requestPermissionsAsync();
+        const { status } = await Notifications.requestPermissionsAsync();
         finalStatus = status;
       }
 
@@ -30,8 +32,15 @@ export default function App() {
         return;
       }
 
-      const pushTokenData = await Notifications.getExpoPushTokenAsync();
-      console.log(pushToken);
+      const projectId =
+        Constants?.expoConfig?.extra?.eas?.projectId ??
+        Constants?.easConfig?.projectId;
+
+      const pushTokenData = await Notifications.getExpoPushTokenAsync({
+        projectId,
+      });
+      console.log("PushToken", pushTokenData);
+      setPushToken(pushTokenData.data);
 
       if (Platform.OS === "android") {
         Notifications.setNotificationChannelAsync("default", {
@@ -48,7 +57,7 @@ export default function App() {
     const subscription1 = Notifications.addNotificationReceivedListener(
       (notification) => {
         const userName = notification.request.content.data.userName;
-        console.log("NOTIFICATION RECEIVED", userName);
+        console.log("NOTIFICATION RECEIVED", notification, userName);
       }
     );
 
@@ -77,12 +86,35 @@ export default function App() {
     });
   }
 
+  function sendPushNotificationHandler() {
+    fetch("https://exp.host/--/api/v2/push/send", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        to: pushToken,
+        title: "Test - Sent from our device!",
+        body: "This is a test!",
+      }),
+    });
+  }
+
   return (
     <View style={styles.container}>
-      <Button
-        title="Schedule Notification"
-        onPress={scheduleNotificationHandler}
-      />
+      <View style={styles.button}>
+        <Button
+          title="Schedule Notification"
+          onPress={scheduleNotificationHandler}
+        />
+      </View>
+
+      <View style={styles.button}>
+        <Button
+          title="Send Push Notification"
+          onPress={sendPushNotificationHandler}
+        />
+      </View>
       <StatusBar style="auto" />
     </View>
   );
@@ -94,5 +126,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+  },
+  button: {
+    paddingVertical: 5,
   },
 });
